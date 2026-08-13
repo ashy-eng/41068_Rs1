@@ -28,6 +28,7 @@ def lab2_solution_run():
 class Lab2Solution:
     def __init__(self):
         # No generic initialisation required
+        #Boop
         pass
 
     # ---------------------------------------------------------------------------------------#
