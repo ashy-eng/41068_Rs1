@@ -35,53 +35,53 @@ class Lab2Solution:
         """
         Question 1: Animate transform (Quad copter flying)
         """
-        start_time = time.time()
+        start_time = time.time()  # start timer to measure how long the animation takes
         speed = 60  # Speed of the animation
         # 1.1
-        tr_start = np.eye(4)
-        tr_end = transl([0, 0, 10])
-        tranimate_custom(tr_start, tr_end, speed=speed)
+        tr_start = np.eye(4)  # UAV starts at the origin with no rotation
+        tr_end = transl([0, 0, 10])  # target: climb straight up 10m
+        tranimate_custom(tr_start, tr_end, speed=speed)  # animate UAV from tr_start to tr_end
         self.display_orientation_text(tr_end)  # 1.10)
 
         # 1.2
         tr_start = transl([0, 0, 10])
-        tr_end = transl([0, 0, 10]) @ trotx(-30*pi/180)
+        tr_end = transl([0, 0, 10]) @ trotx(-30*pi/180)  # target: tilt -30 deg about x axis
         tranimate_custom(tr_start, tr_end, speed=speed)
         self.display_orientation_text(tr_end)  # 1.10)
         # 1.3
-        tr_start = tr_end
-        tr_end = transl([0, 2, 10]) @ trotx(-30 * pi/180)
+        tr_start = tr_end  # previous end pose becomes the new start pose
+        tr_end = transl([0, 2, 10]) @ trotx(-30 * pi/180)  # target: move +2 in y, keep the tilt
         tranimate_custom(tr_start, tr_end, speed=speed)
         self.display_orientation_text(tr_end)  # 1.10)
         # 1.4
         tr_start = tr_end
-        tr_end = transl([0, 2, 10])
+        tr_end = transl([0, 2, 10])  # target: level back out (remove the tilt)
         tranimate_custom(tr_start, tr_end, speed=speed)
         self.display_orientation_text(tr_end)  # 1.10)
         # 1.5
         tr_start = tr_end
-        tr_end = transl([0, 2, 10]) @ troty(30 * pi/180)
+        tr_end = transl([0, 2, 10]) @ troty(30 * pi/180)  # target: tilt +30 deg about y axis
         tranimate_custom(tr_start, tr_end, speed=speed)
         self.display_orientation_text(tr_end)  # 1.10)
         # 1.6
         tr_start = tr_end
-        tr_end = transl([2, 2, 10]) @ troty(30 * pi/180)
+        tr_end = transl([2, 2, 10]) @ troty(30 * pi/180)  # target: move +2 in x, keep the tilt
         tranimate_custom(tr_start, tr_end, speed=speed)
         self.display_orientation_text(tr_end)  # 1.10)
         # 1.7
         tr_start = tr_end
-        tr_end = transl([2, 2, 10])
+        tr_end = transl([2, 2, 10])  # target: level out again
         tranimate_custom(tr_start, tr_end, speed=speed)
         self.display_orientation_text(tr_end)  # 1.10)
         # 1.8
         tr_start = tr_end
-        tr_end = transl([2, 2, 0])
-        tranimate_custom(tr_start,tr_end, speed=speed, hold=True)
+        tr_end = transl([2, 2, 0])  # target: descend straight down to the ground
+        tranimate_custom(tr_start,tr_end, speed=speed, hold=True)  # hold=True keeps the final frame on screen
         self.display_orientation_text(tr_end)  # 1.10)
         # 1.9
         # is already done above
 
-        end_time = time.time()
+        end_time = time.time()  # stop timer
         print("Ex1 took: {:.2f} seconds.".format(end_time - start_time))
 
         input("Finished question 1, press Enter to continue\n")
@@ -90,7 +90,7 @@ class Lab2Solution:
         """
         Question 1: Animate transform (Quadcopter flying)
         """
-        start_time = time.time()
+        start_time = time.time()  # start timer to measure how long the animation takes
         speed = 20  # Animation speed
 
         transforms = [
@@ -104,15 +104,15 @@ class Lab2Solution:
             transl(2, 2, 0)  # 1.8
         ]
 
-        tr_start = np.eye(4)
+        tr_start = np.eye(4)  # UAV starts at the origin with no rotation
 
-        tranimate_custom(tr_start, transl(0, 0, 10), speed=100)
+        tranimate_custom(tr_start, transl(0, 0, 10), speed=100)  # quick preview animation before stepping through
         input("Press Enter to visualize the transforms\n")
 
         for i, tr_end in enumerate(transforms):
-            tranimate_custom(tr_start, tr_end, speed=speed, hold=(i == len(transforms) - 1))
+            tranimate_custom(tr_start, tr_end, speed=speed, hold=(i == len(transforms) - 1))  # hold on the last step
             self.display_orientation_text(tr_end)  # 1.10
-            tr_start = tr_end
+            tr_start = tr_end  # previous end pose becomes the new start pose
 
         print(f"Ex1 took: {time.time() - start_time:.2f} seconds.")
         input("Finished question 1, press Enter to continue\n")
@@ -129,7 +129,7 @@ class Lab2Solution:
         # 2.3 Plot a single iteration of the random step movement
         input("Press Enter to visualize a single step\n")
         cow_herd.plot_single_random_step()
-        plt.pause(0.01)
+        plt.pause(0.01)  # let the figure update before continuing
         input('Finished question 2.3, press Enter to continue\n')
         # 2.4 Create a new instance with 10 cows
         plt.close("all")
@@ -170,9 +170,9 @@ class Lab2Solution:
         cow_herd = RobotCow(3)
         # 3.4 Plot the transform of the UAV starting at the origin
         uav_tr = [None for _ in range(9)]  # List to store all nine UAV's transforms
-        uav_tr[0] = np.eye(4)
+        uav_tr[0] = np.eye(4)  # UAV starts at the origin with no rotation
         # trplot(uav_tr[0])
-        tranimate_custom(uav_tr[0], uav_tr[0], speed=100, hold=True)
+        tranimate_custom(uav_tr[0], uav_tr[0], speed=100, hold=True)  # draw the starting pose only
 
         plt.pause(0.01)
         # 3.5 Determine the transform between the UAV and each of the cows
@@ -197,7 +197,7 @@ class Lab2Solution:
         uav_tr[5] = transl([0, 2, 10]) @ troty(30 * pi/180)
         uav_tr[6] = transl([2, 2, 10]) @ troty(30 * pi/180)
         uav_tr[7] = transl([2, 2, 10])
-        uav_tr[8] = transl([2, 2, 0])
+        uav_tr[8] = transl([2, 2, 0])  # same 9-pose flight path as question 1
 
         plot_range = [-5, 5, -5, 5, 0, 10]  # Plot range to visualise the cow herd and the UAV
         for trajectory_step in range(len(uav_tr)-1):
@@ -206,7 +206,7 @@ class Lab2Solution:
                             # set 'hold' = True to keep everything displayed
                             # on current axes not being deleted
                             # trade-off is the uav's trace at each step will be kept
-            cow_herd.plot_single_random_step()
+            cow_herd.plot_single_random_step()  # move the cows one random step each time the UAV moves
             for cow_index in range(cow_herd.num_cows):
                 print("- At trajectory step",trajectory_step+1,"the UAV TR to cow",cow_index,"is:")
                 try:
@@ -224,23 +224,23 @@ class Lab2Solution:
         """
         plt.close()
         cow_herd = RobotCow(1)
-        start_time = time.time()
+        start_time = time.time()  # start timer to measure how long the chase takes
         plot_range = [-5, 5, -5, 5, 0, 10]  # Plot range to visualise the cow herd and the UAV
 
         # Animate drone to go over cow position
         uav_tr_start = transl(0,0,5)
-        uav_tr_goal = uav_tr_start @ cow_herd.cow_list[0]['base']
+        uav_tr_goal = uav_tr_start @ cow_herd.cow_list[0]['base']  # goal pose: 5m above the cow, matching its orientation
         tranimate_custom(uav_tr_start, uav_tr_goal, speed=50, dim=plot_range, hold=True)
 
         # Go through 10 steps (not specified but this is arbitrary)
         num_steps = 10
         for _ in range(num_steps):
-            cow_herd.plot_single_random_step()
+            cow_herd.plot_single_random_step()  # move the cow one random step
             uav_tr_start = uav_tr_goal
-            uav_tr_goal = cow_herd.cow_list[0]['base'] @ transl(0,0,5)
+            uav_tr_goal = cow_herd.cow_list[0]['base'] @ transl(0,0,5)  # follow the cow's new position, 5m overhead
             tranimate_custom(uav_tr_start, uav_tr_goal, speed=80, dim=plot_range, hold=True)  # Set hold=True to see the trace of the drone
 
-        end_time = time.time()
+        end_time = time.time()  # stop timer
         print("Following the cow took {:.2f} seconds.".format(end_time - start_time))
         input('Finished Question 3.8, press Enter to continue\n')
 
@@ -253,21 +253,21 @@ class Lab2Solution:
         plt.close()
 
         # 4.1 and 4.2: Define the DH Parameters to create the Kinematic model
-        link1 = DHLink(d=0, a=1, alpha=0, qlim=[-pi, pi])
-        link2 = DHLink(d=0, a=1, alpha=0, qlim=[-pi, pi])
-        link3 = DHLink(d=0, a=1, alpha=0, qlim=[-pi, pi])
-        robot = DHRobot([link1, link2, link3], name='myRobot')
-        workspace = [-3, 3, -3, 3, -3, 3]
+        link1 = DHLink(d=0, a=1, alpha=0, qlim=[-pi, pi])  # revolute link, length 1
+        link2 = DHLink(d=0, a=1, alpha=0, qlim=[-pi, pi])  # revolute link, length 1
+        link3 = DHLink(d=0, a=1, alpha=0, qlim=[-pi, pi])  # revolute link, length 1
+        robot = DHRobot([link1, link2, link3], name='myRobot')  # build the 3-link manipulator from the DH links
+        workspace = [-3, 3, -3, 3, -3, 3]  # plot limits for the 3D workspace
         # q =  np.zeros([1,3]) # Initial joint angles = 0
         q = np.array([pi/4, -pi/4, pi/4])  # Initial joint angles as shown in Canvas
 
         try:
             options = {"eelength": 1.0, "jointaxislength": 0.5}
-            robot.plot(q=q, limits=workspace, options=options)
+            robot.plot(q=q, limits=workspace, options=options)  # plot with custom end-effector/axis lengths
         except Exception as e:
             print("[Warning] Custom plotting options (e.g., eelength) are not supported unless you patch the Robotics Toolbox.")
             print("See Canvas for instructions on how to apply the patch to enable these visual customisations.")
-            robot.plot(q=q, limits=workspace)
+            robot.plot(q=q, limits=workspace)  # fall back to the default plot options
 
         # 4.3 Manually play around with the robot
         input("Press Enter to play with teach and then press Enter again to finish\n")
@@ -279,7 +279,7 @@ class Lab2Solution:
             if keyboard.is_pressed('enter'):
                 break
             print("q = ", robot.q)
-            fig.step(0.05)
+            fig.step(0.05)  # advance the teach panel's event loop
 
         # 4.5 Get the joint limits
         print("joint limits: \n", robot.qlim)
@@ -299,8 +299,8 @@ class Lab2Solution:
         import matplotlib.pyplot as plt
         from math import pi
 
-        rpy_deg = np.round(tr2rpy(T), 2) * 180 / pi
-        quat = np.round(r2q(T[:3, :3]), 2)
+        rpy_deg = np.round(tr2rpy(T), 2) * 180 / pi  # convert the rotation to roll/pitch/yaw in degrees
+        quat = np.round(r2q(T[:3, :3]), 2)  # convert the rotation to a quaternion
 
         msg = f"RPY (deg): {rpy_deg.tolist()}\nQuat: {quat.tolist()}"
 
@@ -308,7 +308,7 @@ class Lab2Solution:
         ax = plt.gca()
         if hasattr(ax.figure, '_orientation_text'):
             try:
-                ax.figure._orientation_text.remove()
+                ax.figure._orientation_text.remove()  # clear the old text so it doesn't overlap the new one
             except Exception:
                 pass
 
