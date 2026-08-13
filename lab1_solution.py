@@ -110,28 +110,28 @@ class Lab1Solution:
                 car1_tr = ir.clean_SE2(car1_tr * car1_move_tr * car1_turn_tr) #update car 1's pose by moving and turning
                 car2_tr = ir.clean_SE2(car2_tr * car2_move_tr * car2_turn_tr) #update car 2's pose by moving and turning
 
-                print("car1_to_2_tr = \n", car1_tr.inv() * car2_tr)
-                print("car2_to_1_tr = \n", car2_tr.inv() * car1_tr)
+                print("car1_to_2_tr = \n", car1_tr.inv() * car2_tr) #prints car1 relative to car2
+                print("car2_to_1_tr = \n", car2_tr.inv() * car1_tr) #prints car2 relative to car1
 
                 if question == 4:  # Switch to update subplot 1
-                    plt.subplot(1,2,1)
+                    plt.subplot(1,2,1) #select the track subplot to draw the cars on
 
-                plt.cla()
-                plt.imshow(self.img)
+                plt.cla() #clear the current axes
+                plt.imshow(self.img) #redraws track image so old frames don't pile up
 
-                trplot2(car1_tr.A, frame='1', color='b', length=50, width=0.05)
-                trplot2(car2_tr.A, frame='2', color='r', length=50, width=0.05)
+                trplot2(car1_tr.A, frame='1', color='b', length=50, width=0.05) #draws car 1's frame axes
+                trplot2(car2_tr.A, frame='2', color='r', length=50, width=0.05) #draws car 2's frame axes
 
                 if question == 4:
-                    plt.subplot(1,2,2)
+                    plt.subplot(1,2,2) #switch to the distance subplot
                     plt.xlabel('Timestep')
                     plt.ylabel("Sensor reading - distance between cars")
 
-                    dist[i] = linalg.norm(car1_tr.t - car2_tr.t)
-                    dist_point_h = plt.plot(range(1, i+1), dist[:i], 'b-')
+                    dist[i] = linalg.norm(car1_tr.t - car2_tr.t) #distance between the two cars this timestep
+                    dist_point_h = plt.plot(range(1, i+1), dist[:i], 'b-') #plots distance history so far
 
-                plt.draw()
-                plt.pause(0.01)
+                plt.draw() #redraws the figure
+                plt.pause(0.01) #pause for 0.01 seconds to allow the figure to update
 
                 # Move to the next question if prompted
                 if self.next_question:
@@ -141,7 +141,7 @@ class Lab1Solution:
     # ---------------------------------------------------------------------------------------#
     # This function will be executed when a figure is closed
     def on_close(self, event):
-        self.next_question = True
+        self.next_question = True #set flag so the running loop knows to move on
 
 # ---------------------------------------------------------------------------------------#
 if __name__ == "__main__":
